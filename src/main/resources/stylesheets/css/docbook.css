@@ -1,0 +1,29 @@
+@IMPORT url("spring-like.css");
+@IMPORT url("highlight.css");
+
+div.chapter>div.toc{
+    display: none;
+}
+
+div.part>div.partintro>div.toc{
+    display: none;
+}
+
+
+div.navheader {
+    display: none;
+}
+
+div.navfooter img{
+    display: none;
+}
+
+
+div.list-of-figures{
+    display: none;
+}
+
+div.list-of-tables {
+    display: none;
+}
+
