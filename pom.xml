@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <artifactId>com.zunix</artifactId>
+    <groupId>docbkx-document</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <docbkx.plugin.version>2.0.16</docbkx.plugin.version>
+        <docbook.xml.version>5.0-all</docbook.xml.version>
+        <draft.mode>no</draft.mode>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.agilejava.docbkx</groupId>
+                <artifactId>docbkx-maven-plugin</artifactId>
+                <version>${docbkx.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-pdf</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate-pdf</goal>
+                        </goals>
+                        <configuration>
+                            <preProcess>
+                                <copy todir="${project.build.directory}/docbkx/pdf/images">
+                                    <fileset dir="${basedir}/src/main/resources/images" />
+                                </copy>
+                            </preProcess>
+                            <postProcess>
+                                <copy file="${project.build.directory}/docbkx/pdf/Zunix.pdf" tofile="${project.build.directory}/${project.artifactId}-${project.version}-docs.pdf" />
+                            </postProcess>
+                            <draftMode>${draft.mode}</draftMode>
+                            <keepRelativeImageUris>1</keepRelativeImageUris>
+                            <imgSrcPath>${project.build.directory}/docbkx/pdf/</imgSrcPath>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-html</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate-html</goal>
+                        </goals>
+                        <configuration>
+                            <targetDirectory>${project.build.directory}/docbkx/html</targetDirectory>
+                            <preProcess>
+                                <copy todir="${project.build.directory}/docbkx/html/images">
+                                    <fileset dir="${basedir}/src/main/resources/images" />
+                                </copy>
+                                <copy todir="${project.build.directory}/docbkx/html/css">
+                                    <fileset dir="${basedir}/src/main/resources/css" />
+                                </copy>
+                            </preProcess>
+                            <postProcess>
+                                <zip destfile="${project.build.directory}/${project.artifactId}-${project.version}-docs-single-page-html.zip">
+                                    <fileset dir="${project.build.directory}/docbkx/html" includes="**" />
+                                </zip>
+                            </postProcess>
+                            <draftMode>${draft.mode}</draftMode>
+                            <htmlStylesheet>css/docbook.css</htmlStylesheet>
+                            <keepRelativeImageUris>1</keepRelativeImageUris>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-chunked-html</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate-html</goal>
+                        </goals>
+                        <configuration>
+                            <targetDirectory>${project.build.directory}/docbkx/chunked-html</targetDirectory>
+                            <chunkedOutput>true</chunkedOutput>
+                            <preProcess>
+                                <copy todir="${project.build.directory}/docbkx/chunked-html/images">
+                                    <fileset dir="${basedir}/src/main/resources/images" />
+                                </copy>
+                                <copy todir="${project.build.directory}/docbkx/chunked-html/css">
+                                    <fileset dir="${basedir}/src/main/resources/css" />
+                                </copy>
+                            </preProcess>
+                            <postProcess>
+                                <zip destfile="${project.build.directory}/${project.artifactId}-${project.version}-docs-chunked-html.zip">
+                                    <fileset dir="${project.build.directory}/docbkx/chunked-html" includes="**" />
+                                </zip>
+                            </postProcess>
+                            <draftMode>${draft.mode}</draftMode>
+                            <htmlStylesheet>css/docbook.css</htmlStylesheet>
+                            <keepRelativeImageUris>1</keepRelativeImageUris>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDirectory>${basedir}/src/main/docbkx</sourceDirectory>
+                    <includes>Zunix.xml</includes>
+                    <useExtensions>1</useExtensions>
+                    <generatedSourceDirectory>${project.build.directory}/docbkx/generated</generatedSourceDirectory>
+                    <xincludeSupported>true</xincludeSupported>
+                    <highlightSource>1</highlightSource>
+                    <!--
+                    <highlightDefaultLanguage>myxml</highlightDefaultLanguage>
+                    <foCustomization>src/docbkx/docbook-fo.xsl</foCustomization>
+                    <highlightXslthlConfig>${basedir}/src/main/lib/xsl/highlighting/xslthl-config.xml</highlightXslthlConfig>
+                    -->
+                    <calloutsExtension>1</calloutsExtension>
+                    <paperType>A4</paperType>
+                    <fop1Extensions>1</fop1Extensions>
+                    <foCustomization>${basedir}/src/main/resources/stylesheets/docbook.xsl</foCustomization>
+                    <preProcess>
+                        <copy todir="${project.build.directory}/docbkx/generated/images">
+                            <fileset dir="${basedir}/src/main/resources/images" />
+                        </copy>
+                    </preProcess>
+                </configuration>
+                <dependencies>
+					<dependency>
+						<groupId>net.sf.xslthl</groupId>
+						<artifactId>xslthl</artifactId>
+						<version>2.1.0</version>
+					</dependency>
+                    <dependency>
+                        <groupId>net.sf.docbook</groupId>
+                        <artifactId>docbook-xml</artifactId>
+                        <version>${docbook.xml.version}</version>
+                        <classifier>resources</classifier>
+                        <type>zip</type>
+                        <scope>runtime</scope>
+                    </dependency>
+                    <dependency>
+                        <groupId>saxon</groupId>
+                        <artifactId>saxon</artifactId>
+                        <version>6.5.3</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.10</version>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${project.build.directory}/${project.artifactId}-${project.version}-docs-single-page-html.zip</file>
+									<type>zip</type>
+									<classifier>dcbkzip</classifier>
+								</artifact>
+								<artifact>
+									<file>${project.build.directory}/${project.artifactId}-${project.version}-docs.pdf</file>
+									<type>pdf</type>
+									<classifier>dcbkpdf</classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+                    <execution>
+						<id>attach-artifacts-chunked-html</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/${project.artifactId}-${project.version}-docs-chunked-html.zip</file>
+                                    <type>zip</type>
+                                    <classifier>dcbkzip</classifier>
+                                </artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+
+				</executions>
+			</plugin>
+        </plugins>
+    </build>
+</project>
