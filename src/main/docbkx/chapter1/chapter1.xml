@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <title>Supplier Built API's</title>
+    <para>This section describes the API's that must be developed on the Supplier's system to enable
+        automated communications with Viator systems. The business processes supported by these API's are:
+    </para>
+
+    <xi:include href="section/section2.xml" />
+
+</chapter>

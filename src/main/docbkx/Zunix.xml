@@ -3,7 +3,16 @@
       xmlns:xlink="http://www.w3.org/1999/xlink"
       xmlns:xi="http://www.w3.org/2001/XInclude">
     <info>
-        <title>This is a book</title>
+        <title>
+            Viator Supplier API Technical Specification
+        </title>
+        <copyright>
+            <year>1997</year>
+            <year>2016</year>
+            <holder>Viator, Inc. All rights reserved. Viator is a registered trademark of Viator, Inc.</holder>
+        </copyright>
+        <productname>Viator Supplier API Technical Specification</productname>
+        <productnumber>1.0.8</productnumber>
     </info>
 
     <chapter>

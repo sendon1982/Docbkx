@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <title>Availability Response 2222</title>
+    <section>
+        <title>Single Date Response2222222</title>
+        <para>
+            <emphasis>22222The below sample is the response provided by the supplier system for a single date
+                availability request. In this response the option (9am) of the tour (BON_PRI) is available on
+                October 31 2014. The response provides a reference number (optional) for the availability hold
+                that was requested in the call (see availability request sample), the reference will be used in
+                the subsequent booking request (optional). The availability response also provides availability
+                information for all age bands for the date and product of the request - allowing Viator systems
+                to track availability for other age bands and reduce the number of calls to the supplier.
+            </emphasis>
+        </para>
+
+        <programlisting language="java"><![CDATA[
+        public class Test {
+            public static void main(String[] args) {
+                System.out.println("This is Test");
+            }
+        }
+        ]]></programlisting>
+    </section>
+</section>    
